@@ -74,7 +74,7 @@ EOMSG
 function preserve_jars() {
   JAR_TMP_DIR=`mktemp -d -t prebuilt_update_tmp.XXXXXXXX`
   N=0
-  for i in `find . -type f  | grep -v "^\./\."` ; do
+  for i in `find . -type f -name "*.jar" | grep -v "^\./\."` ; do
     tmpf=`echo $i | tr "./" "__"`
     dstf="$JAR_TMP_DIR/$tmpf"
     cp "$i" "$dstf"
@@ -85,7 +85,7 @@ function preserve_jars() {
 
 function revert_unchanged_jars() {
   local i tmpf dstf tmp_hash local_hash
-  for i in `find . -type f  | grep -v "^\./\."` ; do
+  for i in `find . -type f -name "*.jar" | grep -v "^\./\."` ; do
     tmpf=`echo $i | tr "./" "__"`
     dstf="$JAR_TMP_DIR/$tmpf"
     tmp_hash=`get_hash $dstf`
@@ -105,7 +105,7 @@ function revert_unchanged_jars() {
 
 function revert_filter_jars() {
   local i j tmpf dstf keep
-  for i in `find . -type f  | grep -v "^\./\."` ; do
+  for i in `find . -type f -name "*.jar" | grep -v "^\./\."` ; do
     tmpf=`echo $i | tr "./" "__"`
     dstf="$JAR_TMP_DIR/$tmpf"
     if ! diff -q $dstf $i 1>/dev/null ; then
