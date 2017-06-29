@@ -69,6 +69,5 @@ else
     jarpath="$frameworkdir/$jarfile"
 fi
 
-# need to use "java.ext.dirs" because "-jar" causes classpath to be ignored
 # might need more memory, e.g. -Xmx128M
-exec java -Xmx128M $os_opts $java_debug -Djava.ext.dirs="$frameworkdir" -Djava.library.path="$libdir" -Dcom.android.screenshot.bindir="$progdir" -jar "$jarpath" "$@"
+exec java -Xmx128M $os_opts $java_debug -Dcom.android.screenshot.bindir="$progdir" -jar "$jarpath" "$@"
