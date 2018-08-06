@@ -94,11 +94,11 @@ fi
 
 # Combine the swtpath and the framework dir path.
 if [ -d "$swtpath" ]; then
-    frameworkdir="${swtpath}:${frameworkdir}"
+    frameworkdir="${swtpath}/*:${frameworkdir}/*"
 else
     echo "SWT folder '${swtpath}' does not exist."
     echo "Please export ANDROID_SWT to point to the folder containing swt.jar for your platform."
     exit 1
 fi
 
-exec "${javaCmd}" $javaOpts -Djava.ext.dirs="$frameworkdir" -Dcom.android.uiautomator.bindir="$progdir" -jar "$jarpath" "$@"
+exec "${javaCmd}" $javaOpts -classpath "$frameworkdir:$jarpath" -Dcom.android.uiautomator.bindir="$progdir" com.android.uiautomator.UiAutomatorViewer "$@"
