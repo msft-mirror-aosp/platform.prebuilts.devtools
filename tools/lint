@@ -63,19 +63,12 @@ fi
 
 javaCmd="java"
 
-jarpath="$frameworkdir/$jarfile"
-
-is_java_version_9=$(java -version 2>&1| grep 'version [ "]9.*[ "]')
-if [ "${is_java_version_9}" = "" ]; then
-  modules_arg=""
-else
-  modules_arg="--add-modules=java.xml.bind"
-fi
+jaxbJar="$ANDROID_BUILD_TOP/prebuilts/tools/common/m2/repository/javax/xml/bind/jaxb-api/2.2.12-b140109.1041/jaxb-api-2.2.12-b140109.1041.jar"
+jarpath="$frameworkdir/$jarfile:$jaxbJar"
 
 exec "$javaCmd" \
     -Xmx512m $os_opts $java_debug \
     -Dcom.android.tools.lint.bindir="$progdir" \
     -Djava.awt.headless=true \
     -classpath "$jarpath" \
-    ${modules_arg} \
     com.android.tools.lint.Main "$@"
